@@ -33,10 +33,20 @@ showPage(window.location.hash);
 const canvas = document.getElementById("commerce-canvas");
 const ctx = canvas.getContext("2d");
 const symbols = ["$", "tap", "pay", "cart", "sale", "receipt"];
+const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 let particles = [];
 let width = 0;
 let height = 0;
 let pixelRatio = 1;
+let backgroundGradient;
+let animationFrame = null;
+let lastFrameTime = 0;
+let resizeTimer = null;
+
+function shouldAnimate() {
+  const hash = window.location.hash;
+  return !motionQuery.matches && !document.hidden && hash !== "#products" && hash !== "#about" && hash !== "#contact";
+}
 
 function resizeCanvas() {
   pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
@@ -46,7 +56,14 @@ function resizeCanvas() {
   canvas.height = Math.floor(height * pixelRatio);
   ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
-  particles = Array.from({ length: Math.max(26, Math.floor(width / 34)) }, createParticle);
+  backgroundGradient = ctx.createLinearGradient(0, 0, width, height);
+  backgroundGradient.addColorStop(0, "#142221");
+  backgroundGradient.addColorStop(0.48, "#203330");
+  backgroundGradient.addColorStop(1, "#315346");
+
+  const particleCount = Math.min(34, Math.max(16, Math.floor(width / 56)));
+  particles = Array.from({ length: particleCount }, createParticle);
+  drawBackground();
 }
 
 function createParticle() {
@@ -100,15 +117,27 @@ function roundRect(x, y, w, h, r) {
   ctx.closePath();
 }
 
-function animate() {
+function drawBackground() {
   ctx.clearRect(0, 0, width, height);
-
-  const gradient = ctx.createLinearGradient(0, 0, width, height);
-  gradient.addColorStop(0, "#142221");
-  gradient.addColorStop(0.48, "#203330");
-  gradient.addColorStop(1, "#315346");
-  ctx.fillStyle = gradient;
+  ctx.fillStyle = backgroundGradient;
   ctx.fillRect(0, 0, width, height);
+}
+
+function animate(timestamp = 0) {
+  if (!shouldAnimate()) {
+    stopAnimation();
+    drawBackground();
+    return;
+  }
+
+  animationFrame = requestAnimationFrame(animate);
+
+  if (timestamp - lastFrameTime < 33) {
+    return;
+  }
+
+  lastFrameTime = timestamp;
+  drawBackground();
 
   particles.forEach((particle) => {
     particle.y -= particle.speed;
@@ -121,10 +150,49 @@ function animate() {
 
     drawCard(particle.x, particle.y, particle.size, particle.hue, particle.label, particle.pulse);
   });
-
-  requestAnimationFrame(animate);
 }
 
-window.addEventListener("resize", resizeCanvas);
+function startAnimation() {
+  if (animationFrame || !shouldAnimate()) {
+    return;
+  }
+
+  lastFrameTime = 0;
+  animationFrame = requestAnimationFrame(animate);
+}
+
+function stopAnimation() {
+  if (!animationFrame) {
+    return;
+  }
+
+  cancelAnimationFrame(animationFrame);
+  animationFrame = null;
+}
+
+function refreshAnimationState() {
+  if (shouldAnimate()) {
+    startAnimation();
+  } else {
+    stopAnimation();
+    drawBackground();
+  }
+}
+
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    resizeCanvas();
+    refreshAnimationState();
+  }, 120);
+});
+
+window.addEventListener("hashchange", refreshAnimationState);
+document.addEventListener("visibilitychange", refreshAnimationState);
+if (motionQuery.addEventListener) {
+  motionQuery.addEventListener("change", refreshAnimationState);
+} else {
+  motionQuery.addListener(refreshAnimationState);
+}
 resizeCanvas();
-animate();
+refreshAnimationState();
