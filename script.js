@@ -2,6 +2,131 @@ const pages = [...document.querySelectorAll(".page")];
 const navLinks = [...document.querySelectorAll(".nav-link")];
 const menuToggle = document.querySelector(".menu-toggle");
 const siteNav = document.querySelector(".site-nav");
+const loadingScreen = document.querySelector(".loading-screen");
+const loaderCanvas = document.getElementById("loader-canvas");
+const loaderCtx = loaderCanvas.getContext("2d");
+const loaderSymbols = ["cart", "pay", "$", "sale", "tap", "bag", "%"];
+const loaderDuration = 3000;
+const loaderPlaceDelay = 700;
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+let loaderParticles = [];
+let loaderWidth = 0;
+let loaderHeight = 0;
+let loaderRatio = 1;
+let loaderFrame = null;
+let loaderStartTime = 0;
+
+document.body.classList.add("is-loading");
+
+function resizeLoaderCanvas() {
+  loaderRatio = Math.min(window.devicePixelRatio || 1, 2);
+  loaderWidth = loaderCanvas.clientWidth;
+  loaderHeight = loaderCanvas.clientHeight;
+  loaderCanvas.width = Math.floor(loaderWidth * loaderRatio);
+  loaderCanvas.height = Math.floor(loaderHeight * loaderRatio);
+  loaderCtx.setTransform(loaderRatio, 0, 0, loaderRatio, 0, 0);
+
+  const count = reduceMotion.matches ? 18 : Math.min(72, Math.max(34, Math.floor(loaderWidth / 18)));
+  loaderParticles = Array.from({ length: count }, createLoaderParticle);
+}
+
+function createLoaderParticle() {
+  return {
+    x: Math.random() * loaderWidth,
+    y: Math.random() * loaderHeight,
+    size: 9 + Math.random() * 24,
+    speed: 0.5 + Math.random() * 1.8,
+    drift: -0.7 + Math.random() * 1.4,
+    spin: -0.018 + Math.random() * 0.036,
+    angle: Math.random() * Math.PI * 2,
+    label: loaderSymbols[Math.floor(Math.random() * loaderSymbols.length)],
+    alpha: 0.22 + Math.random() * 0.58,
+    hue: Math.random()
+  };
+}
+
+function drawLoaderParticle(particle, elapsed) {
+  const pulse = Math.sin(elapsed * 0.003 + particle.angle) * 0.18;
+  const colors = particle.hue > 0.66 ? ["#d96b4b", "#f1c56a"] : particle.hue > 0.33 ? ["#4c8fb6", "#9dd6bd"] : ["#1f7a58", "#8abf68"];
+
+  loaderCtx.save();
+  loaderCtx.translate(particle.x, particle.y);
+  loaderCtx.rotate(particle.angle);
+  loaderCtx.globalAlpha = particle.alpha + pulse;
+  loaderCtx.fillStyle = colors[0];
+  loaderCtx.fillRect(-particle.size, -particle.size * 0.42, particle.size * 2, particle.size * 0.84);
+  loaderCtx.fillStyle = colors[1];
+  loaderCtx.fillRect(-particle.size * 0.72, -particle.size * 0.08, particle.size * 1.44, particle.size * 0.16);
+  loaderCtx.fillStyle = "#ffffff";
+  loaderCtx.font = `800 ${Math.max(10, particle.size * 0.44)}px Inter, Arial, sans-serif`;
+  loaderCtx.textAlign = "center";
+  loaderCtx.textBaseline = "middle";
+  loaderCtx.fillText(particle.label, 0, particle.size * 0.2);
+  loaderCtx.restore();
+}
+
+function animateLoader(timestamp = 0) {
+  if (!loaderStartTime) {
+    loaderStartTime = timestamp;
+  }
+
+  const elapsed = timestamp - loaderStartTime;
+  loaderCtx.clearRect(0, 0, loaderWidth, loaderHeight);
+
+  for (let i = 0; i < 7; i += 1) {
+    const y = ((elapsed * 0.04 + i * 120) % (loaderHeight + 140)) - 70;
+    loaderCtx.globalAlpha = 0.08;
+    loaderCtx.fillStyle = i % 2 ? "#9dd6bd" : "#d96b4b";
+    loaderCtx.fillRect(0, y, loaderWidth, 1);
+  }
+
+  loaderCtx.globalAlpha = 1;
+  loaderParticles.forEach((particle) => {
+    particle.y -= particle.speed;
+    particle.x += particle.drift + Math.sin(elapsed * 0.001 + particle.angle) * 0.15;
+    particle.angle += particle.spin;
+
+    if (particle.y < -80 || particle.x < -80 || particle.x > loaderWidth + 80) {
+      Object.assign(particle, createLoaderParticle(), { y: loaderHeight + 80 });
+    }
+
+    drawLoaderParticle(particle, elapsed);
+  });
+
+  if (elapsed < loaderDuration && !reduceMotion.matches) {
+    loaderFrame = requestAnimationFrame(animateLoader);
+  }
+}
+
+function completeLoader() {
+  if (loaderFrame) {
+    cancelAnimationFrame(loaderFrame);
+    loaderFrame = null;
+  }
+
+  loadingScreen.classList.add("is-complete");
+  document.body.classList.remove("is-loading");
+  document.body.classList.remove("is-revealing");
+}
+
+function startLoader() {
+  resizeLoaderCanvas();
+
+  if (!reduceMotion.matches) {
+    loaderFrame = requestAnimationFrame(animateLoader);
+  } else {
+    animateLoader(1);
+  }
+
+  if (!reduceMotion.matches) {
+    document.body.classList.add("is-revealing");
+    window.setTimeout(() => {
+      loadingScreen.classList.add("is-placing");
+    }, loaderPlaceDelay);
+  }
+
+  window.setTimeout(completeLoader, reduceMotion.matches ? 600 : loaderDuration);
+}
 
 function showPage(hash) {
   const target = hash && document.querySelector(hash) ? hash : "#home";
@@ -183,6 +308,7 @@ window.addEventListener("resize", () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
     resizeCanvas();
+    resizeLoaderCanvas();
     refreshAnimationState();
   }, 120);
 });
@@ -196,3 +322,4 @@ if (motionQuery.addEventListener) {
 }
 resizeCanvas();
 refreshAnimationState();
+startLoader();

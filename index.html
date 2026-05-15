@@ -3,16 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="MART ARP offers affordable retail products from Barrie, Ontario, Canada.">
-  <title>MART ARP | Affordable Retail Products</title>
+  <meta name="description" content="PicoMart offers thoughtful, affordable retail products from Barrie, Ontario, Canada.">
+  <title>PicoMart | Everyday Retail, Beautifully Simple</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="loading-screen" aria-label="PicoMart loading experience">
+    <canvas id="loader-canvas" aria-hidden="true"></canvas>
+    <div class="loader-orbit" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="loader-content">
+      <span class="loader-kicker">Preparing the mart</span>
+      <strong>PicoMart</strong>
+      <p>Stocking shelves. Sorting value. Opening the doors.</p>
+      <div class="loader-progress" aria-hidden="true">
+        <span></span>
+      </div>
+    </div>
+    <div class="loader-assembly" aria-hidden="true">
+      <div class="assembly-brand"><span>P</span>PicoMart</div>
+      <div class="assembly-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="assembly-hero">
+        <span></span>
+        <strong></strong>
+        <strong></strong>
+        <p></p>
+        <p></p>
+      </div>
+      <div class="assembly-actions">
+        <span></span>
+        <span></span>
+      </div>
+      <div class="assembly-metrics">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="assembly-trust">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+
   <header class="site-header">
-    <a class="brand" href="#home" aria-label="MART ARP home">MART ARP</a>
+    <a class="brand" href="#home" aria-label="PicoMart home">
+      <span class="brand-mark">P</span>
+      <span>PicoMart</span>
+    </a>
     <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
       <span></span>
       <span></span>
@@ -32,67 +82,94 @@
       <div class="home-shade"></div>
       <div class="home-content">
         <p class="eyebrow">Affordable retail, close to home</p>
-        <h1 id="home-title">MART ARP</h1>
+        <h1 id="home-title">Everyday essentials, curated with care.</h1>
         <p class="hero-copy">
-          A customer-first retail destination built around easy purchasing, dependable value,
-          and products selected for everyday needs.
+          PicoMart is building a customer-first retail destination for practical products,
+          dependable value, and a shopping experience that feels calm from the first click.
         </p>
         <div class="hero-actions">
           <a class="primary-action" href="#products">View Products</a>
           <a class="secondary-action" href="#contact">Contact Us</a>
         </div>
+        <div class="hero-metrics" aria-label="Business highlights">
+          <span><strong>Local</strong>Barrie based</span>
+          <span><strong>Smart</strong>Product sourcing</span>
+          <span><strong>Simple</strong>Customer support</span>
+        </div>
       </div>
       <div class="trust-strip" aria-label="Shopping highlights">
-        <span>Secure payment focus</span>
-        <span>Affordable product sourcing</span>
-        <span>Barrie, Ontario based</span>
+        <span>Fair pricing philosophy</span>
+        <span>Useful everyday categories</span>
+        <span>Responsive service mindset</span>
       </div>
     </section>
 
     <section id="products" class="page products-page" aria-labelledby="products-title">
-      <div class="product-blur" aria-hidden="true">
-        <div class="product-card card-one">
-          <span>Fresh</span>
-          <strong>Pantry</strong>
+      <div class="section-inner products-layout">
+        <div class="products-intro">
+          <p class="eyebrow">Products</p>
+          <h2 id="products-title">The first PicoMart collection is almost ready.</h2>
+          <p>
+            We are preparing practical categories for homes, personal care, pantry needs,
+            small tech, and everyday lifestyle purchases.
+          </p>
         </div>
-        <div class="product-card card-two">
-          <span>Daily</span>
-          <strong>Home</strong>
+        <div class="product-showcase" aria-label="Upcoming product categories">
+          <article class="product-card card-one">
+            <span>Fresh</span>
+            <strong>Pantry</strong>
+            <p>Staples selected for reliable everyday use.</p>
+          </article>
+          <article class="product-card card-two">
+            <span>Daily</span>
+            <strong>Home</strong>
+            <p>Useful household goods without the markup drama.</p>
+          </article>
+          <article class="product-card card-three">
+            <span>Smart</span>
+            <strong>Tech</strong>
+            <p>Compact accessories for work, travel, and routines.</p>
+          </article>
+          <article class="product-card card-four">
+            <span>Style</span>
+            <strong>Wear</strong>
+            <p>Simple apparel picks with comfort in mind.</p>
+          </article>
+          <article class="product-card card-five">
+            <span>Care</span>
+            <strong>Wellness</strong>
+            <p>Personal-care essentials for daily confidence.</p>
+          </article>
         </div>
-        <div class="product-card card-three">
-          <span>Smart</span>
-          <strong>Tech</strong>
+        <div class="launch-panel">
+          <span class="status-dot"></span>
+          <p class="eyebrow">Launch Status</p>
+          <h3>Products are launching soon.</h3>
+          <p>We appreciate your patience while we finalize the first catalog.</p>
         </div>
-        <div class="product-card card-four">
-          <span>Style</span>
-          <strong>Wear</strong>
-        </div>
-        <div class="product-card card-five">
-          <span>Care</span>
-          <strong>Wellness</strong>
-        </div>
-      </div>
-      <div class="launch-panel">
-        <p class="eyebrow">Products</p>
-        <h2 id="products-title">We are launching our products soon...</h2>
-        <p>We appreciate your patience</p>
       </div>
     </section>
 
     <section id="about" class="page about-page" aria-labelledby="about-title">
       <div class="section-inner">
         <p class="eyebrow">About</p>
-        <h2 id="about-title">Affordable products with service that feels personal.</h2>
+        <h2 id="about-title">A small retail brand with a clear promise: make buying easier.</h2>
+        <p class="section-lede">
+          PicoMart is shaped around useful products, thoughtful communication, and service
+          that treats customers like people, not tickets.
+        </p>
         <div class="about-grid">
           <article>
+            <span class="article-number">01</span>
             <h3>How We Serve</h3>
             <p>
-              MART ARP works to bring affordable products to our end users by focusing on
+              PicoMart works to bring affordable products to our end users by focusing on
               practical selection, fair value, and a simple shopping experience. Our goal is
               to make useful products easier to access without adding unnecessary complexity.
             </p>
           </article>
           <article>
+            <span class="article-number">02</span>
             <h3>Our Vision</h3>
             <p>
               We aim to excel in customer service by listening carefully, responding clearly,
@@ -101,11 +178,18 @@
             </p>
           </article>
           <article class="location-card">
+            <span class="article-number">03</span>
             <h3>Business Location</h3>
             <p>Barrie, Ontario, Canada</p>
             <a href="mailto:support@picomaart.com">support@picomaart.com</a>
             <a href="tel:+15146095550">+1 514-609-5550</a>
           </article>
+        </div>
+        <div class="values-row" aria-label="PicoMart values">
+          <span>Practical selection</span>
+          <span>Clear communication</span>
+          <span>Respectful service</span>
+          <span>Fair value</span>
         </div>
       </div>
     </section>
@@ -114,12 +198,30 @@
       <div class="section-inner contact-layout">
         <div>
           <p class="eyebrow">Contact Us</p>
-          <h2 id="contact-title">Tell us how we can help.</h2>
+          <h2 id="contact-title">Questions, requests, and ideas all start here.</h2>
           <p class="contact-copy">
             Send a question, product request, or service note and our team will review it.
           </p>
+          <div class="contact-methods">
+            <a href="mailto:support@picomaart.com">
+              <span>Email</span>
+              support@picomaart.com
+            </a>
+            <a href="tel:+15146095550">
+              <span>Phone</span>
+              +1 514-609-5550
+            </a>
+            <div>
+              <span>Location</span>
+              Barrie, Ontario, Canada
+            </div>
+          </div>
         </div>
         <form class="contact-form" action="mailto:support@picomaart.com" method="post" enctype="text/plain">
+          <div class="form-heading">
+            <h3>Send a message</h3>
+            <p>We will review your note and follow up as soon as possible.</p>
+          </div>
           <label>
             <span>Customer Name</span>
             <input type="text" name="Customer Name" autocomplete="name" required>
