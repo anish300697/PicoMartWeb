@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MART ARP offers affordable retail products from Barrie, Ontario, Canada.">
+  <title>MART ARP | Affordable Retail Products</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="MART ARP home">MART ARP</a>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="#home" class="nav-link active">Home</a>
+      <a href="#products" class="nav-link">Products</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#contact" class="nav-link">Contact Us</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="page home-page active" aria-labelledby="home-title">
+      <canvas id="commerce-canvas" aria-hidden="true"></canvas>
+      <div class="home-shade"></div>
+      <div class="home-content">
+        <p class="eyebrow">Affordable retail, close to home</p>
+        <h1 id="home-title">MART ARP</h1>
+        <p class="hero-copy">
+          A customer-first retail destination built around easy purchasing, dependable value,
+          and products selected for everyday needs.
+        </p>
+        <div class="hero-actions">
+          <a class="primary-action" href="#products">View Products</a>
+          <a class="secondary-action" href="#contact">Contact Us</a>
+        </div>
+      </div>
+      <div class="trust-strip" aria-label="Shopping highlights">
+        <span>Secure payment focus</span>
+        <span>Affordable product sourcing</span>
+        <span>Barrie, Ontario based</span>
+      </div>
+    </section>
+
+    <section id="products" class="page products-page" aria-labelledby="products-title">
+      <div class="product-blur" aria-hidden="true">
+        <div class="product-card card-one">
+          <span>Fresh</span>
+          <strong>Pantry</strong>
+        </div>
+        <div class="product-card card-two">
+          <span>Daily</span>
+          <strong>Home</strong>
+        </div>
+        <div class="product-card card-three">
+          <span>Smart</span>
+          <strong>Tech</strong>
+        </div>
+        <div class="product-card card-four">
+          <span>Style</span>
+          <strong>Wear</strong>
+        </div>
+        <div class="product-card card-five">
+          <span>Care</span>
+          <strong>Wellness</strong>
+        </div>
+      </div>
+      <div class="launch-panel">
+        <p class="eyebrow">Products</p>
+        <h2 id="products-title">We are launching our products soon...</h2>
+        <p>We appreciate your patience</p>
+      </div>
+    </section>
+
+    <section id="about" class="page about-page" aria-labelledby="about-title">
+      <div class="section-inner">
+        <p class="eyebrow">About</p>
+        <h2 id="about-title">Affordable products with service that feels personal.</h2>
+        <div class="about-grid">
+          <article>
+            <h3>How We Serve</h3>
+            <p>
+              MART ARP works to bring affordable products to our end users by focusing on
+              practical selection, fair value, and a simple shopping experience. Our goal is
+              to make useful products easier to access without adding unnecessary complexity.
+            </p>
+          </article>
+          <article>
+            <h3>Our Vision</h3>
+            <p>
+              We aim to excel in customer service by listening carefully, responding clearly,
+              and improving the shopping journey as we grow. We want every customer interaction
+              to feel dependable, respectful, and helpful.
+            </p>
+          </article>
+          <article class="location-card">
+            <h3>Business Location</h3>
+            <p>Barrie, Ontario, Canada</p>
+            <a href="mailto:support@picomaart.com">support@picomaart.com</a>
+            <a href="tel:+15146095550">+1 514-609-5550</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="page contact-page" aria-labelledby="contact-title">
+      <div class="section-inner contact-layout">
+        <div>
+          <p class="eyebrow">Contact Us</p>
+          <h2 id="contact-title">Tell us how we can help.</h2>
+          <p class="contact-copy">
+            Send a question, product request, or service note and our team will review it.
+          </p>
+        </div>
+        <form class="contact-form" action="mailto:support@picomaart.com" method="post" enctype="text/plain">
+          <label>
+            <span>Customer Name</span>
+            <input type="text" name="Customer Name" autocomplete="name" required>
+          </label>
+          <label>
+            <span>Email</span>
+            <input type="email" name="Email" autocomplete="email" required>
+          </label>
+          <label>
+            <span>Description</span>
+            <textarea name="Description" rows="6" required></textarea>
+          </label>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
